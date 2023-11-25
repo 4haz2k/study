@@ -142,11 +142,11 @@ class TelegramController extends Controller
             ['text' => 'Расписание на ближайшую неделю', 'callback_data' => 'schedule'],
         ];
 
-        $replyMarkup = [
+        $replyMarkup = TelegramFacade::replyKeyboardMarkup([
             'keyboard' => $keyboard,
             'resize_keyboard' => true,
             'one_time_keyboard' => false
-        ];
+        ]);
 
         TelegramFacade::sendMessage([
             'chat_id' => $this->update->message->chat->id,
@@ -157,7 +157,7 @@ class TelegramController extends Controller
             3. Получить расписание на неделю.\n\n
             В общем то и всё. *Выбирай одну из трёх кнопок.*
             ",
-            'reply_markup' => json_encode($replyMarkup),
+            'reply_markup' => $replyMarkup,
             'parse_mode' => 'markdown'
         ]);
 
