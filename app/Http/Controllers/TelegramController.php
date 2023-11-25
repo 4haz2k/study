@@ -45,7 +45,8 @@ class TelegramController extends Controller
             case 'Расписание на неделю':
                 $this->schedule();
                 break;
-            case '/start' || 'start':
+            case '/start':
+            case 'start':
                 return $this->newMessage();
             default:
                 return $this->baseMessage();
