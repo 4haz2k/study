@@ -138,11 +138,10 @@ class TelegramController extends Controller
     private function newMessage(): JsonResponse
     {
         $keyboard = Keyboard::make()
-            ->inline()
             ->row(
-                Keyboard::inlineButton(['text' => 'Подписаться', 'callback_data' => 'subscribe']),
-                Keyboard::inlineButton(['text' => 'Отписаться', 'callback_data' => 'unsubscribe']),
-                Keyboard::inlineButton(['text' => 'Расписание на ближайшую неделю', 'callback_data' => 'schedule'])
+                Keyboard::button(['text' => 'Подписаться']),
+                Keyboard::button(['text' => 'Отписаться']),
+                Keyboard::button(['text' => 'Расписание на ближайшую неделю'])
             )
             ->setResizeKeyboard(true)
             ->setOneTimeKeyboard(false);
