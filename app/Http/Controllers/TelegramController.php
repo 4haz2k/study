@@ -27,7 +27,7 @@ class TelegramController extends Controller
         $this->setTelegram(new Api(env('TOKEN')));
         $this->update = $this->getTelegram()->commandsHandler(true);
 
-        Log::query()->create(['chat_id' => $this->update->message->chat->id, 'message' => $this->update->message->text]);
+        Log::create(['chat_id' => $this->update->message->chat->id, 'message' => $this->update->message->text]);
 
         return $this->update->isType('callback_query') ? $this->command() : $this->base();
     }
@@ -54,7 +54,7 @@ class TelegramController extends Controller
 
     private function base(): JsonResponse
     {
-        $participant = Participants::query()->where('chat_id', $this->update->message->chat->id)->first();
+        $participant = Participants::where('chat_id', $this->update->message->chat->id)->first();
         if ($participant) {
             return $this->baseMessage();
         }
@@ -75,7 +75,7 @@ class TelegramController extends Controller
             'one_time_keyboard' => false
         ];
 
-        Participants::query()->updateOrCreate(['chat_id' => $this->update->message->chat->id], ['subscribed' => false]);
+        Participants::updateOrCreate(['chat_id' => $this->update->message->chat->id], ['subscribed' => false]);
         TelegramFacade::sendMessage([
             'chat_id' => $this->update->message->chat->id,
             'text' => "*Вы отписались от уведомлений.*",
@@ -97,7 +97,7 @@ class TelegramController extends Controller
             'one_time_keyboard' => false
         ];
 
-        Participants::query()->updateOrCreate(['chat_id' => $this->update->message->chat->id], ['subscribed' => true]);
+        Participants::updateOrCreate(['chat_id' => $this->update->message->chat->id], ['subscribed' => true]);
         TelegramFacade::sendMessage([
             'chat_id' => $this->update->message->chat->id,
             'text' => "*Вы подписались на уведомления.* Уведомление о начале занятий будет приходить за 2 часа.",
@@ -111,7 +111,7 @@ class TelegramController extends Controller
         $startDate = Carbon::now('Europe/Moscow');
         $endDate = Carbon::now('Europe/Moscow')->addWeek()->endOfDay();
 
-        $schedule = Schedule::query()->whereBetween('created_at', [$startDate, $endDate])->get();
+        $schedule = Schedule::whereBetween('created_at', [$startDate, $endDate])->get();
         if ($schedule->isEmpty()) {
             TelegramFacade::sendMessage([
                 'chat_id' => $this->update->message->chat->id,
