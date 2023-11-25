@@ -9,6 +9,7 @@ use App\Models\Schedule;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Carbon;
 use Telegram\Bot\Api;
+use Telegram\Bot\Keyboard\Keyboard;
 use Telegram\Bot\Objects\Update;
 use Telegram\Bot\Traits\Telegram;
 use Telegram\Bot\Laravel\Facades\Telegram as TelegramFacade;
@@ -142,7 +143,7 @@ class TelegramController extends Controller
             ['text' => 'Расписание на ближайшую неделю', 'callback_data' => 'schedule'],
         ];
 
-        $replyMarkup = TelegramFacade::replyKeyboardMarkup([
+        $replyMarkup = Keyboard::make([
             'keyboard' => $keyboard,
             'resize_keyboard' => true,
             'one_time_keyboard' => false
