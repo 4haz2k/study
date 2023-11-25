@@ -30,79 +30,64 @@ class TelegramController extends Controller
 
         Log::create(['chat_id' => $this->update->message->chat->id, 'message' => $this->update->message->text]);
 
-        return $this->update->isType('callback_query') ? $this->command() : $this->base();
+        return $this->base();
     }
 
-    private function command(): JsonResponse
+    private function base(): JsonResponse
     {
-        switch ($this->update->callbackQuery->data) {
-            case 'subscribe':
+        switch ($this->update->message->text) {
+            case 'Подписаться':
                 $this->subscribe();
                 break;
-            case 'unsubscribe':
+            case 'Отписаться':
                 $this->unsubscribe();
                 break;
-            case 'schedule':
+            case 'Расписание на неделю':
                 $this->schedule();
                 break;
-            case 'start' || '/start':
-                $this->newMessage();
-                break;
+            case '/start' || 'start':
+                return $this->newMessage();
+            default:
+                return $this->baseMessage();
         }
 
         return response()->json(['success' => true]);
     }
 
-    private function base(): JsonResponse
-    {
-        $participant = Participants::where('chat_id', $this->update->message->chat->id)->first();
-        if ($participant) {
-            return $this->baseMessage();
-        }
-
-        return $this->newMessage();
-    }
-
     private function unsubscribe()
     {
-        $keyboard = [
-            ['text' => 'Подписаться', 'callback_data' => 'subscribe'],
-            ['text' => 'Расписание на ближайшую неделю', 'callback_data' => 'schedule'],
-        ];
-
-        $replyMarkup = [
-            'keyboard' => $keyboard,
-            'resize_keyboard' => true,
-            'one_time_keyboard' => false
-        ];
+        $keyboard = Keyboard::make()
+            ->row(
+                Keyboard::button(['text' => 'Подписаться']),
+                Keyboard::button(['text' => 'Расписание на неделю'])
+            )
+            ->setResizeKeyboard(true)
+            ->setOneTimeKeyboard(false);
 
         Participants::updateOrCreate(['chat_id' => $this->update->message->chat->id], ['subscribed' => false]);
         TelegramFacade::sendMessage([
             'chat_id' => $this->update->message->chat->id,
             'text' => "*Вы отписались от уведомлений.*",
-            'reply_markup' => json_encode($replyMarkup),
+            'reply_markup' => $keyboard,
             'parse_mode' => 'markdown'
         ]);
     }
 
     private function subscribe()
     {
-        $keyboard = [
-            ['text' => 'Отписаться', 'callback_data' => 'unsubscribe'],
-            ['text' => 'Расписание на ближайшую неделю', 'callback_data' => 'schedule'],
-        ];
-
-        $replyMarkup = [
-            'keyboard' => $keyboard,
-            'resize_keyboard' => true,
-            'one_time_keyboard' => false
-        ];
+        $keyboard = Keyboard::make()
+            ->row(
+                Keyboard::button(['text' => 'Отписаться']),
+                Keyboard::button(['text' => 'Расписание на неделю'])
+            )
+            ->setResizeKeyboard(true)
+            ->setOneTimeKeyboard(false);
 
         Participants::updateOrCreate(['chat_id' => $this->update->message->chat->id], ['subscribed' => true]);
         TelegramFacade::sendMessage([
             'chat_id' => $this->update->message->chat->id,
             'text' => "*Вы подписались на уведомления.* Уведомление о начале занятий будет приходить за 2 часа.",
-            'reply_markup' => json_encode($replyMarkup),
+            'reply_markup' => $keyboard,
             'parse_mode' => 'markdown'
         ]);
     }
@@ -148,13 +133,7 @@ class TelegramController extends Controller
 
         TelegramFacade::sendMessage([
             'chat_id' => $this->update->message->chat->id,
-            'text' => "Здрасьте.\n\n
-            *У этого бота 3 функции:*\n
-            1. Подписаться на уведомления о начале занятия. Такое уведомление придёт за 2 часа до начала занятий.
-            2. Отписаться от уведомлений. Уведомления приходить не будут (это мой любимый вариант).\n
-            3. Получить расписание на неделю.\n\n
-            В общем то и всё. *Выбирай одну из трёх кнопок.*
-            ",
+            'text' => "Здрасьте.\n\n*У этого бота 3 функции:*\n1. Подписаться на уведомления о начале занятия. Такое уведомление придёт за 2 часа до начала занятий.\n2. Отписаться от уведомлений. Уведомления приходить не будут (это мой любимый вариант).\n3. Получить расписание на неделю.\n\nВ общем то и всё. *Выбирай одну из трёх кнопок.*",
             'reply_markup' => $keyboard,
             'parse_mode' => 'markdown'
         ]);
