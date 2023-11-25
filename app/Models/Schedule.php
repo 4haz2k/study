@@ -11,4 +11,8 @@ class Schedule extends Model
     public $timestamps = false;
 
     protected $table = 'schedule';
+
+    protected $fillable = [
+        'notified'
+    ];
 }

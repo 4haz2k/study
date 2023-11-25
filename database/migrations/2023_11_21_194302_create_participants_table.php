@@ -16,6 +16,7 @@ class CreateParticipantsTable extends Migration
         Schema::create('participants', function (Blueprint $table) {
             $table->text('chat_id');
             $table->boolean('subscribed');
+            $table->boolean('notified')->default(false);
         });
     }
 

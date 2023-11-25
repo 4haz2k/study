@@ -1,6 +1,7 @@
 FROM php:7.4-fpm
 
 RUN apt-get update && apt-get install -y \
+      supervisor \
       apt-utils \
       libpq-dev \
       libpng-dev \
@@ -19,4 +20,10 @@ RUN curl -sS https://getcomposer.org/installer | php -- \
     --filename=composer \
     --install-dir=/usr/local/bin
 
-WORKDIR /var/www
+WORKDIR /var/www/html
+
+COPY /var/www/html/docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+# Set the entry point
+CMD ["/usr/bin/supervisord"]
+
