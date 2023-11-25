@@ -12,6 +12,8 @@ class Participants extends Model
 
     public $timestamps = false;
 
+    protected $primaryKey = 'chat_id';
+
     protected $fillable = [
         'chat_id',
         'subscribed'
