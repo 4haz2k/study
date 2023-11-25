@@ -59,7 +59,9 @@ class TelegramController extends Controller
     {
         $keyboard = Keyboard::make()
             ->row(
-                Keyboard::button(['text' => 'Подписаться']),
+                Keyboard::button(['text' => 'Подписаться'])
+            )
+            ->row(
                 Keyboard::button(['text' => 'Расписание на неделю'])
             )
             ->setResizeKeyboard(true)
@@ -78,7 +80,9 @@ class TelegramController extends Controller
     {
         $keyboard = Keyboard::make()
             ->row(
-                Keyboard::button(['text' => 'Отписаться']),
+                Keyboard::button(['text' => 'Отписаться'])
+            )
+            ->row(
                 Keyboard::button(['text' => 'Расписание на неделю'])
             )
             ->setResizeKeyboard(true)
@@ -127,6 +131,8 @@ class TelegramController extends Controller
             ->row(
                 Keyboard::button(['text' => 'Подписаться']),
                 Keyboard::button(['text' => 'Отписаться']),
+            )
+            ->row(
                 Keyboard::button(['text' => 'Расписание на неделю'])
             )
             ->setResizeKeyboard(true)
