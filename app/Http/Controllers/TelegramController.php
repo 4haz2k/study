@@ -144,11 +144,13 @@ class TelegramController extends Controller
 
     private function baseMessage(): JsonResponse
     {
-        $joke = json_decode(file_get_contents('http://rzhunemogu.ru/RandJSON.aspx?CType=1'), true);
+        $joke = mb_convert_encoding(file_get_contents('http://rzhunemogu.ru/RandJSON.aspx?CType=1'), "utf-8", "windows-1251");
+
+        $joke = str_replace(['{"content":"', '"}'], '', $joke);
 
         TelegramFacade::sendMessage([
             'chat_id' => $this->update->message->chat->id,
-            'text' => "*Не знаю, что тебе ответить, поэтому, вот тебе анекдот для людей за 40:*\n\n{$joke['content']}",
+            'text' => "*Не знаю, что тебе ответить, поэтому, вот тебе анекдот для людей за 40:*\n\n{$joke}",
             'parse_mode' => 'markdown'
         ]);
 
