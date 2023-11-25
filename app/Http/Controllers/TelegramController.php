@@ -127,7 +127,7 @@ class TelegramController extends Controller
             ->row(
                 Keyboard::button(['text' => 'Подписаться']),
                 Keyboard::button(['text' => 'Отписаться']),
-                Keyboard::button(['text' => 'Расписание на ближайшую неделю'])
+                Keyboard::button(['text' => 'Расписание на неделю'])
             )
             ->setResizeKeyboard(true)
             ->setOneTimeKeyboard(false);
@@ -144,11 +144,11 @@ class TelegramController extends Controller
 
     private function baseMessage(): JsonResponse
     {
-        $joke = json_decode(file_get_contents('http://rzhunemogu.ru/RandJSON.aspx?CType=1'));
+        $joke = json_decode(file_get_contents('http://rzhunemogu.ru/RandJSON.aspx?CType=1'), true);
 
         TelegramFacade::sendMessage([
             'chat_id' => $this->update->message->chat->id,
-            'text' => "*Не знаю, что тебе ответить, поэтому, вот тебе анекдот для людей за 40:*\n\n{$joke->content}",
+            'text' => "*Не знаю, что тебе ответить, поэтому, вот тебе анекдот для людей за 40:*\n\n{$joke['content']}",
             'parse_mode' => 'markdown'
         ]);
 
