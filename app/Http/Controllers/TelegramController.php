@@ -137,17 +137,15 @@ class TelegramController extends Controller
 
     private function newMessage(): JsonResponse
     {
-        $keyboard = [
-            ['text' => 'Подписаться', 'callback_data' => 'subscribe'],
-            ['text' => 'Отписаться', 'callback_data' => 'unsubscribe'],
-            ['text' => 'Расписание на ближайшую неделю', 'callback_data' => 'schedule'],
-        ];
-
-        $replyMarkup = Keyboard::make([
-            'keyboard' => $keyboard,
-            'resize_keyboard' => true,
-            'one_time_keyboard' => false
-        ]);
+        $keyboard = Keyboard::make()
+            ->inline()
+            ->row(
+                Keyboard::inlineButton(['text' => 'Подписаться', 'callback_data' => 'subscribe']),
+                Keyboard::inlineButton(['text' => 'Отписаться', 'callback_data' => 'unsubscribe']),
+                Keyboard::inlineButton(['text' => 'Расписание на ближайшую неделю', 'callback_data' => 'schedule'])
+            )
+            ->setResizeKeyboard(true)
+            ->setOneTimeKeyboard(false);
 
         TelegramFacade::sendMessage([
             'chat_id' => $this->update->message->chat->id,
@@ -158,7 +156,7 @@ class TelegramController extends Controller
             3. Получить расписание на неделю.\n\n
             В общем то и всё. *Выбирай одну из трёх кнопок.*
             ",
-            'reply_markup' => $replyMarkup,
+            'reply_markup' => $keyboard,
             'parse_mode' => 'markdown'
         ]);
 
