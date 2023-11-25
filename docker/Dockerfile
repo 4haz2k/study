@@ -20,9 +20,9 @@ RUN curl -sS https://getcomposer.org/installer | php -- \
     --filename=composer \
     --install-dir=/usr/local/bin
 
-WORKDIR /var/www/html
-
 COPY ./supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+WORKDIR /var/www/html
 
 # Set the entry point
 CMD ["/usr/bin/supervisord"]
