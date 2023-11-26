@@ -24,7 +24,4 @@ COPY ./study/docker/schedule-worker.conf /etc/supervisor/conf.d
 
 WORKDIR /var/www/html
 
-CMD supervisord -n -c /etc/supervisor/conf.d/schedule-worker.conf
-
-CMD ["php-fpm"]
-
+CMD ["supervisord","-n","-c", "/etc/supervisor/conf.d/schedule-worker.conf"]
