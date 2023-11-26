@@ -16,6 +16,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         ParseDoc::class,
+        Sender::class
     ];
 
     /**
