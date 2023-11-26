@@ -18,8 +18,8 @@ class Sender extends Command
 
     public function handle(): int
     {
-        $startDate = Carbon::now('Europe/Moscow');
-        $endDate = Carbon::now('Europe/Moscow')->addHours(2);
+        $startDate = Carbon::now()->addHours(3);
+        $endDate = Carbon::now()->addHours(5);
 
         $schedule = Schedule::query()
             ->whereBetween('created_at', [$startDate, $endDate])
