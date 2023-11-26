@@ -46,7 +46,7 @@ class Sender extends Command
                 ]);
             }
 
-            Schedule::query()->where('id', $schedule->id)->update(['notified', true]);
+            Schedule::query()->where('id', $schedule->id)->update(['notified' => true]);
         }
 
         return self::SUCCESS;
