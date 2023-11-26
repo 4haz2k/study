@@ -18,8 +18,6 @@ class Sender extends Command
 
     public function handle(): int
     {
-        Log::info('working');
-
         $startDate = Carbon::now('Europe/Moscow');
         $endDate = Carbon::now('Europe/Moscow')->addHours(2);
 
