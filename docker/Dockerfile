@@ -24,4 +24,4 @@ COPY ./study/docker/schedule-worker.conf /etc/supervisor/conf.d
 
 WORKDIR /var/www/html
 
-CMD ["supervisord","-n","-c", "/etc/supervisor/conf.d/schedule-worker.conf"]
+CMD ["supervisord", "-n", "-c", "/etc/supervisor/conf.d/schedule-worker.conf"]

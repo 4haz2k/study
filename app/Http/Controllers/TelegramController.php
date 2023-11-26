@@ -99,8 +99,8 @@ class TelegramController extends Controller
 
     private function schedule()
     {
-        $startDate = Carbon::now('Europe/Moscow');
-        $endDate = Carbon::now('Europe/Moscow')->addWeek()->endOfDay();
+        $startDate = Carbon::now()->addHours(3);
+        $endDate = Carbon::now()->addHours(3)->addWeek()->endOfDay();
 
         $schedule = Schedule::whereBetween('created_at', [$startDate, $endDate])->get();
         if ($schedule->isEmpty()) {
