@@ -13,6 +13,10 @@ class Schedule extends Model
     protected $table = 'schedule';
 
     protected $fillable = [
+        'subject',
+        'theme',
+        'link',
+        'created_at',
         'notified'
     ];
 }

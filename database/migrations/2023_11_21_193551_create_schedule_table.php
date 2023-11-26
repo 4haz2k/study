@@ -15,6 +15,7 @@ class CreateScheduleTable extends Migration
     {
         Schema::create('schedule', function (Blueprint $table) {
             $table->id();
+            $table->boolean('notified')->default(false);
             $table->string('subject');
             $table->string('theme');
             $table->text('link');
