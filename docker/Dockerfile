@@ -20,7 +20,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- \
     --filename=composer \
     --install-dir=/usr/local/bin
 
-COPY ./docker/crontab /etc/cron.d/crontab
+COPY ./study/docker/crontab /etc/cron.d/crontab
 RUN chmod 0644 /etc/cron.d/crontab
 
 # Create the log file to be able to run tail
