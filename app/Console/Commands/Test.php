@@ -14,8 +14,8 @@ class Test extends Command
 
     public function handle()
     {
-        $startDate = Carbon::now()->addHours(3);
-        $endDate = Carbon::now()->addHours(5);
+        $startDate = Carbon::now();
+        $endDate = Carbon::now()->addHours(2);
 
         $schedule = Schedule::query()
             ->whereBetween('created_at', [$startDate, $endDate])
