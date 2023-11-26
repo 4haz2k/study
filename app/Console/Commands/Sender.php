@@ -6,6 +6,7 @@ use App\Models\Participants;
 use App\Models\Schedule;
 use Illuminate\Console\Command;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Log;
 use Telegram\Bot\Laravel\Facades\Telegram as TelegramFacade;
 use Telegram\Bot\Traits\Telegram;
 
@@ -17,6 +18,8 @@ class Sender extends Command
 
     public function handle(): int
     {
+        Log::info('working');
+
         $startDate = Carbon::now('Europe/Moscow');
         $endDate = Carbon::now('Europe/Moscow')->addHours(2);
 
