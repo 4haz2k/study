@@ -6,7 +6,6 @@ use App\Models\Participants;
 use App\Models\Schedule;
 use Illuminate\Console\Command;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Log;
 use Telegram\Bot\Laravel\Facades\Telegram as TelegramFacade;
 use Telegram\Bot\Traits\Telegram;
 
@@ -36,7 +35,11 @@ class Sender extends Command
             }
 
             $date = Carbon::createFromFormat('Y-m-d H:i:s', $schedule->created_at)->format('d.m.y H:i');
-            $scheduleString = "*Предмет:* {$schedule->subject}\n*Тип занятия:* {$schedule->theme}\n*Дата и время:* {$date}\n*Ссылка на занятие:* {$schedule->link}\n\n";
+            if ($schedule->building) {
+                $scheduleString = "*Предмет:* {$schedule->subject}\n*Тип занятия:* {$schedule->theme}\n*Дата и время:* {$date}\n*Преподаватель:* {$schedule->teacher}\n*Здание КАИ:* {$schedule->building}\n*Аудитория:* {$schedule->link}\n\n";
+            } else {
+                $scheduleString = "*Предмет:* {$schedule->subject}\n*Тип занятия:* {$schedule->theme}\n*Дата и время:* {$date}\n*Преподаватель:* {$schedule->teacher}\n*Ссылка на занятие:* {$schedule->link}\n\n";
+            }
 
             foreach ($participants as $participant) {
                 TelegramFacade::sendMessage([

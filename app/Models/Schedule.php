@@ -17,6 +17,8 @@ class Schedule extends Model
         'theme',
         'link',
         'created_at',
-        'notified'
+        'notified',
+        'teacher',
+        'building'
     ];
 }

@@ -115,7 +115,11 @@ class TelegramController extends Controller
         $scheduleString = "";
         foreach ($schedule as $item) {
             $date = Carbon::createFromFormat('Y-m-d H:i:s', $item->created_at)->format('d.m.y H:i');
-            $scheduleString .= "*Предмет:* {$item->subject}\n*Тип занятия:* {$item->theme}\n*Дата и время:* {$date}\n*Ссылка на занятие:* {$item->link}\n\n";
+            if ($item->building) {
+                $scheduleString .= "*Предмет:* {$item->subject}\n*Тип занятия:* {$item->theme}\n*Дата и время:* {$date}\n*Преподаватель:* {$item->teacher}\n*Здание КАИ:* {$item->building}\n*Аудитория:* {$item->link}\n\n";
+            } else {
+                $scheduleString .= "*Предмет:* {$item->subject}\n*Тип занятия:* {$item->theme}\n*Дата и время:* {$date}\n*Преподаватель:* {$item->teacher}\n*Ссылка на занятие:* {$item->link}\n\n";
+            }
         }
 
         TelegramFacade::sendMessage([

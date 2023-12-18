@@ -4,7 +4,6 @@ namespace App\Console;
 
 use App\Console\Commands\ParseDoc;
 use App\Console\Commands\Sender;
-use App\Console\Commands\Test;
 use Illuminate\Console\Scheduling\Schedule;
 use Laravel\Lumen\Console\Kernel as ConsoleKernel;
 
@@ -17,8 +16,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         ParseDoc::class,
-        Sender::class,
-        Test::class
+        Sender::class
     ];
 
     /**
