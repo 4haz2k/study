@@ -24,11 +24,11 @@ class ParseDoc extends Command
 
             $result = $this->readCSV($csvFile, ['delimiter' => ';']);
 
-            unset($result[30]);
+            unset($result[14]);
 
             $toInsert = [];
             foreach ($result as $value) {
-                $date = substr($value[1], -5) . '.2023 ' . $value[2];
+                $date = substr($value[1], -5) . '.2024 ' . $value[2];
                 $toInsert[] = [
                     'subject' => $value[4],
                     'theme' => $value[5],
