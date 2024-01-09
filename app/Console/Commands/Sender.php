@@ -42,11 +42,13 @@ class Sender extends Command
             }
 
             foreach ($participants as $participant) {
-                TelegramFacade::sendMessage([
-                    'chat_id' => $participant->chat_id,
-                    'text' => "Скоро будет занятие:\n\n{$scheduleString}",
-                    'parse_mode' => 'markdown'
-                ]);
+                try {
+                    TelegramFacade::sendMessage([
+                        'chat_id' => $participant->chat_id,
+                        'text' => "Скоро будет занятие:\n\n{$scheduleString}",
+                        'parse_mode' => 'markdown'
+                    ]);
+                } catch (\Throwable $exception) {}
             }
 
             Schedule::query()->where('id', $schedule->id)->update(['notified' => true]);
