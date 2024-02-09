@@ -118,7 +118,7 @@ class TelegramController extends Controller
             if ($item->building) {
                 $scheduleString .= "<b>Предмет:</b> {$item->subject}</b><br>Тип занятия:</b> {$item->theme}<br><b>Дата и время:</b> {$date}<br><b>Преподаватель:</b> {$item->teacher}<br><b>Здание КАИ:</b> {$item->building}<br><b>Аудитория:</b> {$item->link}<br><br>";
             } else {
-                $scheduleString .= "<b>Предмет:</b> {$item->subject}<br><b>Тип занятия:</b> {$item->theme}<br><b>Дата и время:</b> {$date}<br><b>Преподаватель:</b> {$item->teacher}<br><b>Ссылка на занятие:</b> {$item->link}<br><br>";
+                $scheduleString .= "<b>Предмет:</b> {$item->subject}<br><b>Тип занятия:</b> {$item->theme}<br><b>Дата и время:</b> {$date}<br><b>Преподаватель:</b> {$item->teacher}<br>";
             }
         }
 
