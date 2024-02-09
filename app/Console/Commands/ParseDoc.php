@@ -20,22 +20,23 @@ class ParseDoc extends Command
         try {
             DB::beginTransaction();
 
-            $csvFile = resource_path('ras2.csv');
+            $csvFile = resource_path('ras3.csv');
 
             $result = $this->readCSV($csvFile, ['delimiter' => ';']);
 
-            unset($result[14]);
+            unset($result[80]);
 
             $toInsert = [];
             foreach ($result as $value) {
-                $date = substr($value[1], -5) . '.2024 ' . $value[2];
+                $date = $value[1] . ' ' . $value[2];
                 $toInsert[] = [
                     'subject' => $value[4],
                     'theme' => $value[5],
                     'link' => $value[6],
                     'created_at' => Carbon::createFromFormat('d.m.Y H:i', $date)->toDateTimeString(),
                     'teacher' => $value[9],
-                    'building' => empty($value[10]) ? null : $value[10]
+//                    'building' => empty($value[10]) ? null : $value[10]
+                    'building' => null
                 ];
             }
 
