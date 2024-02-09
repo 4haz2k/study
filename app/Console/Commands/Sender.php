@@ -36,9 +36,9 @@ class Sender extends Command
 
             $date = Carbon::createFromFormat('Y-m-d H:i:s', $schedule->created_at)->format('d.m.y H:i');
             if ($schedule->building) {
-                $scheduleString = "*Предмет:* {$schedule->subject}\n*Тип занятия:* {$schedule->theme}\n*Дата и время:* {$date}\n*Преподаватель:* {$schedule->teacher}\n*Здание КАИ:* {$schedule->building}\n*Аудитория:* {$schedule->link}\n\n";
+                $scheduleString = "<b>Предмет:</b> {$schedule->subject}</b><br>Тип занятия:</b> {$schedule->theme}<br><b>Дата и время:</b> {$date}<br><b>Преподаватель:</b> {$schedule->teacher}<br><b>Здание КАИ:</b> {$schedule->building}<br><b>Аудитория:</b> {$schedule->link}<br><br>";
             } else {
-                $scheduleString = "*Предмет:* {$schedule->subject}\n*Тип занятия:* {$schedule->theme}\n*Дата и время:* {$date}\n*Преподаватель:* {$schedule->teacher}\n*Ссылка на занятие:* {$schedule->link}\n\n";
+                $scheduleString = "<b>Предмет:</b> {$schedule->subject}<br><b>Тип занятия:</b> {$schedule->theme}<br><b>Дата и время:</b> {$date}<br><b>Преподаватель:</b> {$schedule->teacher}<br><b>Ссылка на занятие:</b> {$schedule->link}<br><br>";
             }
 
             foreach ($participants as $participant) {
@@ -46,7 +46,7 @@ class Sender extends Command
                     TelegramFacade::sendMessage([
                         'chat_id' => $participant->chat_id,
                         'text' => "Скоро будет занятие:\n\n{$scheduleString}",
-                        'parse_mode' => 'markdown'
+                        'parse_mode' => 'html'
                     ]);
                 } catch (\Throwable $exception) {}
             }

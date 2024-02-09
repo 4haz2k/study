@@ -70,9 +70,9 @@ class TelegramController extends Controller
         Participants::updateOrCreate(['chat_id' => $this->update->message->chat->id], ['subscribed' => false]);
         TelegramFacade::sendMessage([
             'chat_id' => $this->update->message->chat->id,
-            'text' => "*Вы отписались от уведомлений.*",
+            'text' => "<b>Вы отписались от уведомлений.</b>",
             'reply_markup' => $keyboard,
-            'parse_mode' => 'markdown'
+            'parse_mode' => 'html'
         ]);
     }
 
@@ -91,9 +91,9 @@ class TelegramController extends Controller
         Participants::updateOrCreate(['chat_id' => $this->update->message->chat->id], ['subscribed' => true]);
         TelegramFacade::sendMessage([
             'chat_id' => $this->update->message->chat->id,
-            'text' => "*Вы подписались на уведомления.* Уведомление о начале занятий будет приходить за 2 часа.",
+            'text' => "<b>Вы подписались на уведомления.</b> Уведомление о начале занятий будет приходить за 2 часа.",
             'reply_markup' => $keyboard,
-            'parse_mode' => 'markdown'
+            'parse_mode' => 'html'
         ]);
     }
 
@@ -116,16 +116,16 @@ class TelegramController extends Controller
         foreach ($schedule as $item) {
             $date = Carbon::createFromFormat('Y-m-d H:i:s', $item->created_at)->format('d.m.y H:i');
             if ($item->building) {
-                $scheduleString .= "*Предмет:* {$item->subject}\n*Тип занятия:* {$item->theme}\n*Дата и время:* {$date}\n*Преподаватель:* {$item->teacher}\n*Здание КАИ:* {$item->building}\n*Аудитория:* {$item->link}\n\n";
+                $scheduleString .= "<b>Предмет:</b> {$item->subject}</b><br>Тип занятия:</b> {$item->theme}<br><b>Дата и время:</b> {$date}<br><b>Преподаватель:</b> {$item->teacher}<br><b>Здание КАИ:</b> {$item->building}<br><b>Аудитория:</b> {$item->link}<br><br>";
             } else {
-                $scheduleString .= "*Предмет:* {$item->subject}\n*Тип занятия:* {$item->theme}\n*Дата и время:* {$date}\n*Преподаватель:* {$item->teacher}\n*Ссылка на занятие:* {$item->link}\n\n";
+                $scheduleString .= "<b>Предмет:</b> {$item->subject}<br><b>Тип занятия:</b> {$item->theme}<br><b>Дата и время:</b> {$date}<br><b>Преподаватель:</b> {$item->teacher}<br><b>Ссылка на занятие:</b> {$item->link}<br><br>";
             }
         }
 
         TelegramFacade::sendMessage([
             'chat_id' => $this->update->message->chat->id,
-            'text' => "Расписание на неделю:\n\n{$scheduleString}",
-            'parse_mode' => 'markdown'
+            'text' => "Расписание на неделю:<br><br>{$scheduleString}",
+            'parse_mode' => 'html'
         ]);
     }
 
@@ -144,9 +144,9 @@ class TelegramController extends Controller
 
         TelegramFacade::sendMessage([
             'chat_id' => $this->update->message->chat->id,
-            'text' => "Здрасьте.\n\n*У этого бота 3 функции:*\n1. Подписаться на уведомления о начале занятия. Такое уведомление придёт за 2 часа до начала занятий.\n2. Отписаться от уведомлений. Уведомления приходить не будут (это мой любимый вариант).\n3. Получить расписание на неделю.\n\nВ общем то и всё. *Выбирай одну из трёх кнопок.*",
+            'text' => "Привет.<br><br><b>У этого бота 3 функции:</b><br>1. Подписаться на уведомления о начале занятия. Такое уведомление придёт за 2 часа до начала занятий.<br>2. Отписаться от уведомлений. Уведомления приходить не будут (это мой любимый вариант).<br>3. Получить расписание на неделю.<br><br>В общем то и всё. <b>Выбирай одну из трёх кнопок.</b>",
             'reply_markup' => $keyboard,
-            'parse_mode' => 'markdown'
+            'parse_mode' => 'html'
         ]);
 
         return response()->json(['success' => true]);
@@ -160,8 +160,8 @@ class TelegramController extends Controller
 
         TelegramFacade::sendMessage([
             'chat_id' => $this->update->message->chat->id,
-            'text' => "*Не знаю, что тебе ответить, поэтому, вот тебе анекдот для людей за 40:*\n\n{$joke}",
-            'parse_mode' => 'markdown'
+            'text' => "<b>Не знаю, что тебе ответить, поэтому, вот тебе анекдот для людей за 40:</b><br><br>{$joke}",
+            'parse_mode' => 'html'
         ]);
 
         return response()->json(['success' => true]);
