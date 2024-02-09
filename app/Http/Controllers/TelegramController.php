@@ -116,15 +116,15 @@ class TelegramController extends Controller
         foreach ($schedule as $item) {
             $date = Carbon::createFromFormat('Y-m-d H:i:s', $item->created_at)->format('d.m.y H:i');
             if ($item->building) {
-                $scheduleString .= "<b>Предмет:</b> {$item->subject}</b><br>Тип занятия:</b> {$item->theme}<br><b>Дата и время:</b> {$date}<br><b>Преподаватель:</b> {$item->teacher}<br><b>Здание КАИ:</b> {$item->building}<br><b>Аудитория:</b> {$item->link}<br><br>";
+                $scheduleString .= "<b>Предмет:</b> {$item->subject}</b>\nТип занятия:</b> {$item->theme}\n<b>Дата и время:</b> {$date}\n<b>Преподаватель:</b> {$item->teacher}\n<b>Здание КАИ:</b> {$item->building}\n<b>Аудитория:</b> {$item->link}\n\n";
             } else {
-                $scheduleString .= "<b>Предмет:</b> {$item->subject}<br><b>Тип занятия:</b> {$item->theme}<br><b>Дата и время:</b> {$date}<br><b>Преподаватель:</b> {$item->teacher}<br>";
+                $scheduleString .= "<b>Предмет:</b> {$item->subject}\n<b>Тип занятия:</b> {$item->theme}\n<b>Дата и время:</b> {$date}\n<b>Преподаватель:</b> {$item->teacher}\n<b>Ссылка на занятие:</b> {$item->link}\n\n";
             }
         }
 
         TelegramFacade::sendMessage([
             'chat_id' => $this->update->message->chat->id,
-            'text' => "Расписание на неделю:<br><br>{$scheduleString}",
+            'text' => "Расписание на неделю:\n\n{$scheduleString}",
             'parse_mode' => 'html'
         ]);
     }
@@ -144,7 +144,7 @@ class TelegramController extends Controller
 
         TelegramFacade::sendMessage([
             'chat_id' => $this->update->message->chat->id,
-            'text' => "Привет.<br><br><b>У этого бота 3 функции:</b><br>1. Подписаться на уведомления о начале занятия. Такое уведомление придёт за 2 часа до начала занятий.<br>2. Отписаться от уведомлений. Уведомления приходить не будут (это мой любимый вариант).<br>3. Получить расписание на неделю.<br><br>В общем то и всё. <b>Выбирай одну из трёх кнопок.</b>",
+            'text' => "Привет.\n\n<b>У этого бота 3 функции:</b>\n1. Подписаться на уведомления о начале занятия. Такое уведомление придёт за 2 часа до начала занятий.\n2. Отписаться от уведомлений. Уведомления приходить не будут (это мой любимый вариант).\n3. Получить расписание на неделю.\n\nВ общем то и всё. <b>Выбирай одну из трёх кнопок.</b>",
             'reply_markup' => $keyboard,
             'parse_mode' => 'html'
         ]);
@@ -160,7 +160,7 @@ class TelegramController extends Controller
 
         TelegramFacade::sendMessage([
             'chat_id' => $this->update->message->chat->id,
-            'text' => "<b>Не знаю, что тебе ответить, поэтому, вот тебе анекдот для людей за 40:</b><br><br>{$joke}",
+            'text' => "<b>Не знаю, что тебе ответить, поэтому, вот тебе анекдот для людей за 40:</b>\n\n{$joke}",
             'parse_mode' => 'html'
         ]);
 

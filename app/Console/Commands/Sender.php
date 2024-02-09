@@ -36,9 +36,9 @@ class Sender extends Command
 
             $date = Carbon::createFromFormat('Y-m-d H:i:s', $schedule->created_at)->format('d.m.y H:i');
             if ($schedule->building) {
-                $scheduleString = "<b>Предмет:</b> {$schedule->subject}</b><br>Тип занятия:</b> {$schedule->theme}<br><b>Дата и время:</b> {$date}<br><b>Преподаватель:</b> {$schedule->teacher}<br><b>Здание КАИ:</b> {$schedule->building}<br><b>Аудитория:</b> {$schedule->link}<br><br>";
+                $scheduleString = "<b>Предмет:</b> {$schedule->subject}</b>\nТип занятия:</b> {$schedule->theme}\n<b>Дата и время:</b> {$date}\n<b>Преподаватель:</b> {$schedule->teacher}\n<b>Здание КАИ:</b> {$schedule->building}\n<b>Аудитория:</b> {$schedule->link}\n\n";
             } else {
-                $scheduleString = "<b>Предмет:</b> {$schedule->subject}<br><b>Тип занятия:</b> {$schedule->theme}<br><b>Дата и время:</b> {$date}<br><b>Преподаватель:</b> {$schedule->teacher}<br><b>Ссылка на занятие:</b> {$schedule->link}<br><br>";
+                $scheduleString = "<b>Предмет:</b> {$schedule->subject}\n<b>Тип занятия:</b> {$schedule->theme}\n<b>Дата и время:</b> {$date}\n<b>Преподаватель:</b> {$schedule->teacher}\n<b>Ссылка на занятие:</b> {$schedule->link}\n\n";
             }
 
             foreach ($participants as $participant) {
