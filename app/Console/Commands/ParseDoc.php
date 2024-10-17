@@ -20,7 +20,7 @@ class ParseDoc extends Command
 
         $result = $this->readCSV($csvFile, ['delimiter' => ';']);
 
-        unset($result[74]);
+        unset($result[75]);
 
         $toInsert = [];
         foreach ($result as $value) {
