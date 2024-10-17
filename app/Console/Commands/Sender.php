@@ -51,7 +51,7 @@ class Sender extends Command
                 } catch (\Throwable $exception) {}
             }
 
-            Schedule::query()->where('id', $schedule->id)->update(['notified' => true]);
+            $schedule->update(['notified' => true]);
         }
 
         return self::SUCCESS;
